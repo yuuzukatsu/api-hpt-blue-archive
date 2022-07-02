@@ -8,7 +8,8 @@ const router = express.Router();
 var connection = require('../database');
 
 
-router.get('/login', function (req, res) {
+
+router.get('/', function (req, res) {
     res.send('Auth API for https://hpt-blue-archive.netlify.app/');
 });
 

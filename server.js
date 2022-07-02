@@ -24,12 +24,17 @@ app.use(cors()); //{origin: 'http://localhost:8100'}
 app.use('/raid', raidRouter);
 app.use('/auth', authRouter);
 
+app.use(express.static("public"))
+
 // default URL to API
-app.use('/', function(req, res) {
+app.get('/', function(req, res) {
     res.send('API for https://hpt-blue-archive.netlify.app/');
 });
 
-const server = http.createServer(app);
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
+
+/*const server = http.createServer(app);
 const port = 3000;
 server.listen(port);
-console.debug('Server listening on port ' + port);
+console.debug('Server listening on port ' + port);*/
