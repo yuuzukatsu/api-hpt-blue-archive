@@ -36,6 +36,35 @@ router.get('/', function (req, res) {
     })
 });
 
+//READ SPECIFIC ID
+router.get('/:id', function (req, res) {
+    //res.status(200).json(data);
+    //CHECK API KEY
+    connection.query('SELECT * FROM authkey WHERE authkey = ?', req.headers.key, (err, rows, field) => {
+        if (err){
+            res.send('Raid API for https://hpt-blue-archive.netlify.app/ <br> If you see this, you need the correct API KEY');
+        }else{
+            if(rows.length>0){
+                //BEGIN READ
+                connection.query('SELECT * FROM raid where id = ?',req.params.id, (err, rows, field) => {
+                    if (err){
+                        return res.status(500).json({ message: 'Error', error: err });
+                    }else{
+                        if(rows.length>0){
+                            res.status(200).json(rows);
+                        }else{
+                            res.status(200).json({ message: 'Empty'})
+                        }
+                    }
+                })
+            }else{
+                res.status(200).json({ "code": "2", "message":"Wrong Key"})
+            }
+        }
+    })
+});
+
+
 //INSERT NEW RAID LOG
 router.post('/', function (req,res){
     
